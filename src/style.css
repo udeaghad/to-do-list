@@ -5,7 +5,7 @@
 }
 
 main {
-  background-color:rgb(231, 231, 231);
+  background-color: rgb(231, 231, 231);
   height: 100%;
   padding: 10% 3% 15% 3%;
 }
@@ -13,7 +13,6 @@ main {
 .heading {
   display: flex;
   height: 100px;
-  
   background-color: white;
   justify-content: space-between;
   align-items: center;
@@ -21,9 +20,9 @@ main {
   border-radius: 10px 10px 0 0;
 }
 
-h1 {    
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 32px;    
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 32px;
   padding-left: 18px;
 }
 
@@ -43,8 +42,8 @@ h1 {
   font-size: 32px;
   font-style: italic;
 }
+
 .fa-solid {
-  font-family: "Font Awesome 6 Free";
   font-weight: 900;
   font-size: 18px;
 }
@@ -64,7 +63,6 @@ h1 {
   gap: 12px;
   list-style: none;
   padding: 12px;
- 
 }
 
 .list ul input {
@@ -72,13 +70,10 @@ h1 {
   height: 42px;
 }
 
-
-
 .list ul li {
   font-size: 32px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 92%;
-  
 }
 
 .clear-btn {
