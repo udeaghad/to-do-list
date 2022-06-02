@@ -27,6 +27,11 @@ Setup
    - Clone the repository on github to your local terminal
 Install
    - Ensure you have git installed on your terminal
+   - run each ogthe following codes on your terminal
+      -  npm install
+      -  npm run build
+      -  npm start
+   -Ensure you have node.js installed.
   
 Usage
    - Open the index.html file with your browser to view the webpage
