@@ -7,13 +7,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
-/* harmony import */ var _modules_enterValue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
+/* harmony import */ var _modules_loadstorage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
+/* harmony import */ var _modules_checkitem_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
 
 
 
-const taskList = [];
 
-
+window.addEventListener('load', _modules_loadstorage_js__WEBPACK_IMPORTED_MODULE_2__["default"])
+let taskList = [];
 
 const container = document.querySelector('.to-do-cont');
 
@@ -24,511 +25,126 @@ class Task {
         this.index = index;
     }
 }
-const inputAdd = document.querySelector('#to-do-input');
-
-
+   
+let index = 1;   
     
- let index = 1; 
- 
- 
-    
-/*const enterValue = () => {
+const enterValue = () => {
     
     const addTask = new Task(inputAdd.value, false, index);
-    const {descr, completed, index: indexVal}= addTask;
+    
     taskList.push(addTask)
-   index++
+  index+=1
    
-    localStorage.setItem("taskList", JSON.stringify(taskList))
+  localStorage.setItem("taskList", JSON.stringify(taskList))
+  addItem(addTask.descr)
+
   
-    showAddItem(descr,completed,indexVal);
 
-}*/
+  
+  }
 
-const showAddItem = (descr, completed, index) => {
-        const listContainer = document.createElement('div');
-        listContainer.classList.add('list');
-        container.appendChild(listContainer)
-        const listBox = document.createElement('ul');
-        const checkBoxInput =document.createElement('input');
-        checkBoxInput.id = "check-box";
-        checkBoxInput.classList = "check-box";
-        checkBoxInput.type = "checkbox";
-        
-        iconHover(descr, checkBoxInput, listContainer, listBox, descr)
+const addItem = (item) => {
+    const container = document.querySelector('.to-do-cont');
+    const listContainer = document.createElement('div');
+  listContainer.classList.add('list');
+  container.appendChild(listContainer);
+ 
+const listItem = document.createElement('ul');
+listItem.classList.add('list-item');
+
+const checkbox = document.createElement('input');
+checkbox.classList.add('check-box');
+checkbox.type = 'checkbox';
+
+const listInfo = document.createElement('li');
+listInfo.classList.add('list-info');
+listInfo.innerHTML = `${item}`;
+
+const editIcon = document.createElement('i');
+editIcon.classList.add('fa-solid', 'fa-ellipsis-vertical', 'icon');
+
+listContainer.appendChild(listItem)
+
+listItem.append(checkbox, listInfo,editIcon)
+
+editIcon.addEventListener('click', () => {
+   
+    const editInput = document.createElement('input');
+    editInput.classList.add('edit-input')
+    listItem.replaceChild(editInput, listInfo)
+        editInput.value = listInfo.innerHTML
+
+        const storedData = JSON.parse(localStorage.getItem('taskList'))
+       
+       const newData = storedData.filter(arr => arr.descr !==listInfo.innerHTML)
+      console.log(taskList)
+      
+      taskList = taskList.filter(arr => arr.descr !==listInfo.innerHTML )
+      console.log(taskList)
+      localStorage.setItem('taskList', JSON.stringify(newData)) 
+      
+    
+
+    editInput.addEventListener('keypress', (e) => {
+ 
+        if(e.key === 'Enter'){
+            listItem.replaceChild(listInfo, editInput)
+            listInfo.innerHTML = editInput.value
+            const storedData = JSON.parse(localStorage.getItem('taskList'))
+             const editedTask = new Task(listInfo.innerHTML, false, index)
+            
+           storedData.push(editedTask);
+           taskList.push(editedTask);
+           console.log(taskList)  
+          
+            localStorage.setItem('taskList', JSON.stringify(storedData))
+
+            numberIndex();
+        }
+       })
+
+
+})
+
+numberIndex();
+  
 }
 
 
-        
- const iconHover = (descr, checkBoxInput, listContainer, listBox) => {   
-        const iconImg = document.createElement('i');
-        iconImg.classList.add('fa-solid' ,'fa-ellipsis-vertical', 'icon');
-
-        const listInfo = document.createElement('li');
-        listInfo.classList.add('list-info');
-        listInfo.innerHTML = descr;
-
-        iconImg.addEventListener('mouseover', (e) => {
-            let mouseOver = e.target;
-            let parent = mouseOver.parentNode;
-            let iconFan = parent.getElementsByClassName('icon')[0];
-           //iconFan.classList = "fa-solid fa-trash icon";
-            iconFan.style.cursor = "move"
-        })
-    
-       iconImg.addEventListener('mouseout', (e) => {
-            let mouseOver = e.target;
-            let parent = mouseOver.parentNode;
-            let iconFan = parent.getElementsByClassName('icon')[0];
-            iconFan.classList = "fa-solid fa-ellipsis-vertical icon";
-        })
-
-        iconImg.addEventListener('click', (e) => {
-            let trashClick = e.target;
-            let parent = trashClick.parentNode;
-            let iconFan = parent.getElementsByClassName('icon')[0];
-            listInfo.classList.toggle("edit"); 
-            
-            if(listInfo.classList.contains('edit')){
-                listInfo.remove();
-                let newInput = document.createElement('input');
-                listBox.insertBefore(newInput, iconImg);
-                newInput.classList = 'newInput'
-                newInput.value = descr;
-   const newInputDiv = document.querySelectorAll('.newInput')
+;
 
     
-            newInputDiv.forEach(i => {
-                i.addEventListener('keypress', e => {
-                    if (e.key === "Enter"){
-              const editTask = new Task(newInput.value, false, index);
-              
-                       taskList.push(editTask)  
-                      
-                       for (let i in taskList){
-                        if(taskList[i].descr === descr){                           
-                           
-                            taskList.splice(i,1) 
-                            console.log(taskList)    
-                            localStorage.setItem("taskList", JSON.stringify(taskList)) 
-                            const storedItem = JSON.parse(localStorage.getItem(('taskList'))) 
-                console.log(storedItem[0].index) 
-               let index = 0;
-               for (let i = 0;i < storedItem.length; i++){ 
-               if (storedItem[i].index > 0){
-                   storedItem[i].index = index+=1
-                   
-               }
-               
-               }
-               console.log(storedItem)
-               localStorage.setItem('taskList', JSON.stringify(storedItem)) 
-                                           
-                        }                                              
-                        newInput.remove();
-                        listBox.insertBefore(listInfo, iconImg);                              
-                        listInfo.innerHTML = newInput.value  
+container.addEventListener('click', _modules_checkitem_js__WEBPACK_IMPORTED_MODULE_3__["default"])
 
-                        
-
-                    }    
-                }   
-                              
-               
-                    })
-                })
-            } 
-           
-        })
-
-        checkedBoxItem(checkBoxInput, listContainer, listBox, listInfo, iconImg, descr)
-            
-    }
-
-    const checkedBoxItem = (checkBoxInput, listContainer, listBox, listInfo, iconImg, descr) =>{
-        checkBoxInput.addEventListener('change', (e) =>{
-            e.preventDefault();
-            let box = e.target;
-            let parent = box.parentNode;
-            let checkedBox = parent.getElementsByClassName('check-box')[0];
-         
-            
-            if(checkedBox.checked === true){
-             checkBoxInput.classList.toggle('checked')  
-            listInfo.classList = "line-through";
-            iconImg.classList = "fa-solid fa-trash icon";
-            console.log(checkBoxInput.value) 
-           
-            }else if(checkedBox.checked === false){
-                checkBoxInput.classList = 'check-box'
-                listInfo.classList = "list-info";
-                iconImg.classList = "fa-solid fa-ellipsis-vertical icon";
-                console.log(checkBoxInput.value) 
-               
+const numberIndex = () => {
+    const dataStorage = JSON.parse(localStorage.getItem('taskList'))
+            console.log(dataStorage)
+            let newIndex = 0;
+            for (let i = 0; i < dataStorage.length; i+=1){
+                dataStorage[i].index = newIndex+=1
+                
             }
-            let storedData = JSON.parse(localStorage.getItem('taskList'))
-            const checkBoxItem =document.querySelectorAll('.check-box')
-            const checkedItem = document.querySelectorAll('checked')
-        //const listInfoCont = document.getElementsByClassName('.line-through')
-        console.log(checkBoxItem)
-        console.log(checkedItem)
-        checkBoxItem.forEach(i => {
-            i.addEventListener('change', () => {
-            
-            console.log(storedData[0].completed) 
-        
-         console.log(checkBoxItem)
-        for(let i = 0; i < storedData.length; i++){
-            console.log(checkBoxItem)
-             if (checkBoxItem[i].classList === "check-box") {
-                
-            storedData[i].completed = false;
-            console.log(storedData)
-            
-            
-             }else if (checkBoxItem[i].classList.contains('checked')){ 
-                
-                storedData[i].completed = true
-                console.log(storedData)
-               
-             }
-             
-                }
-                localStorage.setItem('taskList', JSON.stringify(storedData))
-              })
-        //console.log(taskList)
-       
-       })
-                  
-
-
-          iconImg.addEventListener('click', () => {
-              listContainer.remove();
-              console.log(taskList)
-              console.log(descr)
-
-              for (let i in taskList){
-                if(taskList[i].descr === descr){                           
-                   
-                    taskList.splice(i,1) 
-                    console.log(taskList)
-                    
-                    localStorage.setItem("taskList", JSON.stringify(taskList))  
-
-                const storedItem = JSON.parse(localStorage.getItem(('taskList'))) 
-                console.log(storedItem[0].index) 
-               let index = 0;
-               for (let i = 0;i < storedItem.length; i++){ 
-               if (storedItem[i].index > 0){
-                   storedItem[i].index = index+=1
-                   
-               }
-               
-               }
-               console.log(storedItem)
-            
-                } 
-            }               
-          })
-
-          let clearBtn = document.querySelector('#clear-btn');
-          clearBtn.addEventListener('click', () => {
-              if(checkedBox.checked === true){
-                  listContainer.remove();
-                  for (let i in taskList){
-                    if(taskList[i].descr === descr){                           
-                       
-                        taskList.splice(i,1) 
-                        console.log(taskList)
-                        
-                        localStorage.setItem("taskList", JSON.stringify(taskList)) 
-
-                        const storedItem = JSON.parse(localStorage.getItem(('taskList'))) 
-                console.log(storedItem[0].index) 
-               let index = 0;
-               for (let i = 0;i < storedItem.length; i++){ 
-               if (storedItem[i].index > 0){
-                   storedItem[i].index = index+=1
-                   
-               }
-               
-               }
-               console.log(storedItem)
-               localStorage.setItem('taskList', JSON.stringify(storedItem))
-                        
-                                        
-                    } 
-                }         
-              }
-          })
-
-        })
-        
-    
-        listContainer.appendChild(listBox)
-        listBox.append(checkBoxInput, listInfo, iconImg)    
-       
-        const itemStorage = JSON.parse(localStorage.getItem('taskList'));
-        console.log(itemStorage)  
-
-         
-
-               
-    }
-
-    
+            console.log(dataStorage)               
+            localStorage.setItem('taskList', JSON.stringify(dataStorage))
+}
 
 
 
-const showItems = () => {
-  const listContainer = document.createElement('div');
-  listContainer.classList.add('list');
-  container.appendChild(listContainer)
-  const listBox = document.createElement('ul');
-  const checkBoxInput =document.createElement('input');
-  checkBoxInput.id = "check-box";
-  checkBoxInput.classList = "check-box";
-  checkBoxInput.type = "checkbox";
 
-  
-
-  const iconImg = document.createElement('i');
-  iconImg.classList.add('fa-solid' ,'fa-ellipsis-vertical', 'icon');
-
-  const listInfo = document.createElement('li');
-  listInfo.classList.add('list-info');
-  listInfo.innerHTML = descr;
-
-  iconImg.addEventListener('mouseover', (e) => {
-      let mouseOver = e.target;
-      let parent = mouseOver.parentNode;
-      let iconFan = parent.getElementsByClassName('icon')[0];
-     //iconFan.classList = "fa-solid fa-trash icon";
-      iconFan.style.cursor = "move"
-  })
-
- iconImg.addEventListener('mouseout', (e) => {
-      let mouseOver = e.target;
-      let parent = mouseOver.parentNode;
-      let iconFan = parent.getElementsByClassName('icon')[0];
-      iconFan.classList = "fa-solid fa-ellipsis-vertical icon";
-  })
-
-  iconImg.addEventListener('click', (e) => {
-      let trashClick = e.target;
-      let parent = trashClick.parentNode;
-      let iconFan = parent.getElementsByClassName('icon')[0];
-      listInfo.classList.toggle("edit"); 
-      
-      if(listInfo.classList.contains('edit')){
-          listInfo.remove();
-          let newInput = document.createElement('input');
-          listBox.insertBefore(newInput, iconImg);
-          newInput.classList = 'newInput'
-          newInput.value = descr;
-const newInputDiv = document.querySelectorAll('.newInput')
-
-
-      newInputDiv.forEach(i => {
-          i.addEventListener('keypress', e => {
-              if (e.key === "Enter"){
-        const editTask = new Task(newInput.value, false, index);
-        
-                 taskList.push(editTask)  
-                
-                 for (let i in taskList){
-                  if(taskList[i].descr === descr){                           
-                     
-                      taskList.splice(i,1) 
-                      console.log(taskList)    
-                      localStorage.setItem("taskList", JSON.stringify(taskList)) 
-                      const storedItem = JSON.parse(localStorage.getItem(('taskList'))) 
-          console.log(storedItem[0].index) 
-         let index = 0;
-         for (let i = 0;i < storedItem.length; i++){ 
-         if (storedItem[i].index > 0){
-             storedItem[i].index = index+=1
-             
-         }
-         
-         }
-         console.log(storedItem)
-         localStorage.setItem('taskList', JSON.stringify(storedItem)) 
-                                     
-                  }                                              
-                  newInput.remove();
-                  listBox.insertBefore(listInfo, iconImg);                              
-                  listInfo.innerHTML = newInput.value  
-
-                  
-
-              }    
-          }   
-                        
-         
-              })
-          })
-      } 
-     
-  })
-      
-
-  checkBoxInput.addEventListener('change', (e) =>{
-      e.preventDefault();
-      let box = e.target;
-      let parent = box.parentNode;
-      let checkedBox = parent.getElementsByClassName('check-box')[0];
-   
-      
-      if(checkedBox.checked === true){
-       checkBoxInput.classList.toggle('checked')  
-      listInfo.classList = "line-through";
-      iconImg.classList = "fa-solid fa-trash icon";
-      console.log(checkBoxInput.value) 
-     // taskList.completed = true;
-      }else if(checkedBox.checked === false){
-          checkBoxInput.classList = 'check-box'
-          listInfo.classList = "list-info";
-          iconImg.classList = "fa-solid fa-ellipsis-vertical icon";
-          console.log(checkBoxInput.value) 
-         // taskList.completed =false;
-      }
-      let storedData = JSON.parse(localStorage.getItem('taskList'))
-      const checkBoxItem =document.querySelectorAll('.check-box')
-      const checkedItem = document.querySelectorAll('checked')
-  const listInfoCont = document.getElementsByClassName('.line-through')
-  console.log(checkBoxItem)
-  console.log(checkedItem)
-  checkBoxItem.forEach(i => {
-      i.addEventListener('change', () => {
-      
-      console.log(storedData[0].completed) 
-  
-   console.log(checkBoxItem)
-  for(let i = 0; i < storedData.length; i++){
-      console.log(checkBoxItem)
-       if (checkBoxItem[i].classList === "check-box") {
-          
-      storedData[i].completed = false;
-      console.log(storedData)
-      
-      
-       }else if (checkBoxItem[i].classList.contains('checked')){ 
-          
-          storedData[i].completed = true
-          console.log(storedData)
-         
-       }
-       
-          }
-          localStorage.setItem('taskList', JSON.stringify(storedData))
-        })
-  //console.log(taskList)
- 
- })
-            
-
-
-    iconImg.addEventListener('click', () => {
-        listContainer.remove();
-        console.log(taskList)
-        console.log(descr)
-
-        for (let i in taskList){
-          if(taskList[i].descr === descr){                           
-             
-              taskList.splice(i,1) 
-              console.log(taskList)
-              
-              localStorage.setItem("taskList", JSON.stringify(taskList))  
-
-          const storedItem = JSON.parse(localStorage.getItem(('taskList'))) 
-          console.log(storedItem[0].index) 
-         let index = 0;
-         for (let i = 0;i < storedItem.length; i++){ 
-         if (storedItem[i].index > 0){
-             storedItem[i].index = index+=1
-             
-         }
-         
-         }
-         console.log(storedItem)
-         localStorage.setItem('taskList', JSON.stringify(storedItem))
-          
-        /*  let count = 0;
-                  const storedData = JSON.parse(localStorage.getItem('taskList'));
-                
-                const items = Array.from(storedData).filter(i => i.index >= 0)
-  items.map(i => i.index = count+=1);
-  localStorage.setItem('listTask',JSON.stringify(items));*/ 
-          } 
-      }               
-    })
-
-    let clearBtn = document.querySelector('#clear-btn');
-    clearBtn.addEventListener('click', () => {
-        if(checkedBox.checked === true){
-            listContainer.remove();
-            for (let i in taskList){
-              if(taskList[i].descr === descr){                           
-                 
-                  taskList.splice(i,1) 
-                  console.log(taskList)
-                  
-                  localStorage.setItem("taskList", JSON.stringify(taskList)) 
-
-                  const storedItem = JSON.parse(localStorage.getItem(('taskList'))) 
-          console.log(storedItem[0].index) 
-         let index = 0;
-         for (let i = 0;i < storedItem.length; i++){ 
-         if (storedItem[i].index > 0){
-             storedItem[i].index = index+=1
-             
-         }
-         
-         }
-         console.log(storedItem)
-         localStorage.setItem('taskList', JSON.stringify(storedItem))
-                  
-                                  
-              } 
-          }         
-        }
-    })
-
-  })
-
-  
-
- 
-  
-
-  listContainer.appendChild(listBox)
-  listBox.append(checkBoxInput, listInfo, iconImg)    
- 
-  const itemStorage = JSON.parse(localStorage.getItem('taskList'));
-  console.log(itemStorage)  
-
-   
-
-          
-}      
-
-//showItems() 
+const inputAdd = document.querySelector('#to-do-input')
 
 inputAdd.addEventListener('keypress', (e) => {
-   
-    if (e.key ==="Enter"){
-        e.preventDefault();
+    if (e.key === 'Enter') {
+      e.preventDefault();
+  
+      enterValue();
+  
+      inputAdd.value = null;
+
+      
+    }
     
-    (0,_modules_enterValue__WEBPACK_IMPORTED_MODULE_2__.enterValue)();
-    
-     inputAdd.value = null;
-    
-    }   
-    
-    
-})  
+  });
 
 
 
@@ -18099,7 +17715,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nmain {\r\n  background-color:rgb(231, 231, 231);\r\n  height: 100%;\r\n  padding: 10% 3% 15% 3%;\r\n}\r\n\r\n.heading {\r\n  display: flex;\r\n  height: 100px;\r\n  \r\n  background-color: white;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding-right: 24px;\r\n  border-radius: 10px 10px 0 0;\r\n}\r\n\r\nh1 {    \r\n  font-family:Verdana, Geneva, Tahoma, sans-serif;\r\n  font-size: 32px;    \r\n  padding-left: 18px;\r\n}\r\n\r\n.input-field {\r\n  margin-top: 5px;\r\n  height: 100px;\r\n  width: 100%;\r\n  display: flex;\r\n  background-color: white;\r\n  align-items: center;\r\n  padding: 24px;\r\n}\r\n\r\n#to-do-input\r\n{\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n.edit-input {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  \r\n}\r\n.fa-solid {\r\n  font-family: \"Font Awesome 6 Free\";\r\n  font-weight: 900;\r\n  font-size: 18px;\r\n}\r\n\r\n.list {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 28px;\r\n  background-color: white;\r\n  margin-top: 5px;\r\n}\r\n\r\n.list ul {\r\n  display: flex;\r\n  height: 100px;\r\n  align-items: center;\r\n  gap: 12px;\r\n  list-style: none;\r\n  padding: 12px;\r\n \r\n}\r\n\r\n.check-box {\r\n  width: 42px;\r\n  height: 42px;\r\n}\r\n\r\n.newInput {\r\n  width: 88%;    \r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n\r\n\r\n.list ul li {\r\n  font-size: 32px;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  width: 92%;\r\n  \r\n}\r\n\r\n.clear-btn {\r\n  width: 100%;\r\n  height: 150px;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  border: none;\r\n  border-radius: 0 0 10px 10px;\r\n}\r\n\r\nsection {\r\n  margin: 10px 10px 10px 10px;\r\n}\r\n\r\n.edit {\r\n  border: none;   \r\n}\r\n\r\n.line-through {\r\n  text-decoration: line-through;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nmain {\r\n  background-color:rgb(231, 231, 231);\r\n  height: 100%;\r\n  padding: 10% 3% 15% 3%;\r\n}\r\n\r\n.heading {\r\n  display: flex;\r\n  height: 100px;\r\n  \r\n  background-color: white;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding-right: 24px;\r\n  border-radius: 10px 10px 0 0;\r\n}\r\n\r\nh1 {    \r\n  font-family:Verdana, Geneva, Tahoma, sans-serif;\r\n  font-size: 32px;    \r\n  padding-left: 18px;\r\n}\r\n\r\n.input-field {\r\n  margin-top: 5px;\r\n  height: 100px;\r\n  width: 100%;\r\n  display: flex;\r\n  background-color: white;\r\n  align-items: center;\r\n  padding: 24px;\r\n}\r\n\r\n#to-do-input\r\n{\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n.edit-input {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  \r\n}\r\n.fa-solid {\r\n  font-family: \"Font Awesome 6 Free\";\r\n  font-weight: 900;\r\n  font-size: 18px;\r\n}\r\n\r\n.list {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 28px;\r\n  background-color: white;\r\n  margin-top: 5px;\r\n}\r\n\r\n.list-item {\r\n  display: flex;\r\n  height: 100px;\r\n  align-items: center;\r\n  gap: 12px;\r\n  list-style: none;\r\n  padding: 12px;\r\n \r\n}\r\n\r\n.check-box {\r\n  width: 42px;\r\n  height: 42px;\r\n}\r\n\r\n.newInput {\r\n  width: 88%;    \r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n\r\n\r\n.list-info {\r\n  font-size: 32px;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  width: 92%;\r\n  \r\n}\r\n\r\n.clear-btn {\r\n  width: 100%;\r\n  height: 150px;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  border: none;\r\n  border-radius: 0 0 10px 10px;\r\n}\r\n\r\nsection {\r\n  margin: 10px 10px 10px 10px;\r\n}\r\n\r\n.edit-input {\r\n  border: 1px solid gray; \r\n    \r\n}\r\n\r\n.line-through {\r\n  text-decoration: line-through;\r\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -18230,20 +17846,164 @@ module.exports = function (cssWithMappingToString) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "enterValue": () => (/* binding */ enterValue)
+/* harmony export */   "default": () => (/* binding */ loadFromStorage)
 /* harmony export */ });
- const enterValue = () => {
-    
-    const addTask = new Task(inputAdd.value, false, index);
-    const {descr, completed, index: indexVal}= addTask;
-    taskList.push(addTask)
-   index++
+const loadFromStorage = () => {
    
-    localStorage.setItem("taskList", JSON.stringify(taskList))
-  
-    showAddItem(descr,completed,indexVal);
+    const dataStorage = JSON.parse(localStorage.getItem('taskList'))
+    for (let i = 0; i < dataStorage.length; i+=1){
+    const container = document.querySelector('.to-do-cont');
+    const listContainer = document.createElement('div');
+  listContainer.classList.add('list');
+  container.appendChild(listContainer);
+ 
+const listItem = document.createElement('ul');
+listItem.classList.add('list-item');
 
+const checkbox = document.createElement('input');
+checkbox.classList.add('check-box');
+checkbox.type = 'checkbox';
+
+
+const listInfo = document.createElement('li');
+listInfo.classList.add('list-info');
+listInfo.innerHTML = `${dataStorage[i].descr}`;
+
+const editIcon = document.createElement('i');
+editIcon.classList.add('fa-solid', 'fa-ellipsis-vertical', 'icon');
+
+listContainer.appendChild(listItem)
+
+listItem.append(checkbox, listInfo,editIcon)
+
+editIcon.addEventListener('click', () => {
+   
+    const editInput = document.createElement('input');
+    editInput.classList.add('edit-input')
+    listItem.replaceChild(editInput, listInfo)
+        editInput.value = listInfo.innerHTML
+
+        const storedData = JSON.parse(localStorage.getItem('taskList'))
+       
+       const newData = storedData.filter(arr => arr.descr !==listInfo.innerHTML)
+      console.log(taskList)
+      
+      taskList = taskList.filter(arr => arr.descr !==listInfo.innerHTML )
+      console.log(taskList)
+      localStorage.setItem('taskList', JSON.stringify(newData)) 
+      
+    
+
+    editInput.addEventListener('keypress', (e) => {
+ 
+        if(e.key === 'Enter'){
+            listItem.replaceChild(listInfo, editInput)
+            listInfo.innerHTML = editInput.value
+            const storedData = JSON.parse(localStorage.getItem('taskList'))
+             const editedTask = new Task(listInfo.innerHTML, false, index)
+            
+           storedData.push(editedTask);
+           taskList.push(editedTask);
+           console.log(taskList)  
+          
+            localStorage.setItem('taskList', JSON.stringify(storedData))
+
+            numberIndex();
+        }
+       })
+
+
+})
+
+numberIndex();
 }
+}
+
+const numberIndex = () => {
+    const dataStorage = JSON.parse(localStorage.getItem('taskList'))
+            console.log(dataStorage)
+            let newIndex = 0;
+            for (let i = 0; i < dataStorage.length; i+=1){
+                dataStorage[i].index = newIndex+=1
+                
+            }
+            console.log(dataStorage)               
+            localStorage.setItem('taskList', JSON.stringify(dataStorage))
+}
+
+
+
+/***/ }),
+/* 13 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ checkItem)
+/* harmony export */ });
+let taskList = [];
+
+const checkItem = () => {
+    const listItem = document.querySelectorAll('.list-item');
+
+    listItem.forEach(i => {
+        const checkbox = document.querySelectorAll('.check-box');
+        const listInfo = document.querySelectorAll('.list-info');
+        const iconImg = document.querySelectorAll('.icon')
+        const clearBtn =document.querySelector('#clear-btn')
+         
+         for (let i = 0; i < checkbox.length;i+=1){
+             if(checkbox[i].checked){
+            
+             listInfo[i].classList.add('line-through')
+             iconImg[i].classList = 'fa-solid fa-trash icon'
+             }else if(checkbox[i].checked ===false && listInfo[i]){
+                 listInfo[i].classList = 'list-info'
+                 iconImg[i].classList = 'fa-solid fa-ellipsis-vertical icon'
+             }
+
+             if (iconImg[i].classList.contains('fa-trash')){
+                 
+                 iconImg[i].addEventListener('click', () => {
+                     listItem[i].remove();
+                     numberIndex();
+                 })
+             }
+             if (iconImg[i].classList.contains('fa-trash')){
+                 clearBtn.addEventListener('click', () => {
+                     listItem[i].remove();
+     const storedData = JSON.parse(localStorage.getItem('taskList'))
+       
+       const newData = storedData.filter(arr => arr.descr !==  listInfo[i].innerHTML)
+       taskList = taskList.filter(arr => arr.descr !== listInfo[i].innerHTML )
+       console.log(taskList)
+       localStorage.setItem('taskList', JSON.stringify(newData))
+       
+       numberIndex();
+                     
+                 })
+             }
+         }
+    })
+
+    
+}
+
+const numberIndex = () => {
+    const dataStorage = JSON.parse(localStorage.getItem('taskList'))
+            console.log(dataStorage)
+            let newIndex = 0;
+            for (let i = 0; i < dataStorage.length; i+=1){
+                dataStorage[i].index = newIndex+=1
+                
+            }
+            console.log(dataStorage)               
+            localStorage.setItem('taskList', JSON.stringify(dataStorage))
+}
+
+
+
 
 /***/ })
 ],

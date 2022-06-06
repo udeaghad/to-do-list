@@ -66,7 +66,7 @@ h1 {
   margin-top: 5px;
 }
 
-.list ul {
+.list-item {
   display: flex;
   height: 100px;
   align-items: center;
@@ -89,7 +89,7 @@ h1 {
 
 
 
-.list ul li {
+.list-info {
   font-size: 32px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 92%;
@@ -110,10 +110,12 @@ section {
   margin: 10px 10px 10px 10px;
 }
 
-.edit {
-  border: none;   
+.edit-input {
+  border: 1px solid gray; 
+    
 }
 
 .line-through {
   text-decoration: line-through;
 }
+

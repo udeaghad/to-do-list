@@ -1,38 +1,7 @@
-import _ from 'lodash';
-import './style.css';
-import loadFromStorage from './modules/loadstorage.js'
-
-window.addEventListener('load', loadFromStorage)
-let taskList = [];
-
-const container = document.querySelector('.to-do-cont');
-
-class Task {
-    constructor(descr, completed, index = 0){
-        this.descr = descr;
-        this.completed = completed;
-        this.index = index;
-    }
-}
+const loadFromStorage = () => {
    
-let index = 1;   
-    
-const enterValue = () => {
-    
-    const addTask = new Task(inputAdd.value, false, index);
-    
-    taskList.push(addTask)
-  index+=1
-   
-  localStorage.setItem("taskList", JSON.stringify(taskList))
-  addItem(addTask.descr)
-
-  
-
-  
-  }
-
-const addItem = (item) => {
+    const dataStorage = JSON.parse(localStorage.getItem('taskList'))
+    for (let i = 0; i < dataStorage.length; i+=1){
     const container = document.querySelector('.to-do-cont');
     const listContainer = document.createElement('div');
   listContainer.classList.add('list');
@@ -45,9 +14,10 @@ const checkbox = document.createElement('input');
 checkbox.classList.add('check-box');
 checkbox.type = 'checkbox';
 
+
 const listInfo = document.createElement('li');
 listInfo.classList.add('list-info');
-listInfo.innerHTML = `${item}`;
+listInfo.innerHTML = `${dataStorage[i].descr}`;
 
 const editIcon = document.createElement('i');
 editIcon.classList.add('fa-solid', 'fa-ellipsis-vertical', 'icon');
@@ -96,14 +66,8 @@ editIcon.addEventListener('click', () => {
 })
 
 numberIndex();
-  
 }
-
-
-import checkItem from './modules/checkitem.js'
-
-    
-container.addEventListener('click', checkItem)
+}
 
 const numberIndex = () => {
     const dataStorage = JSON.parse(localStorage.getItem('taskList'))
@@ -117,23 +81,4 @@ const numberIndex = () => {
             localStorage.setItem('taskList', JSON.stringify(dataStorage))
 }
 
-
-
-
-const inputAdd = document.querySelector('#to-do-input')
-
-inputAdd.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-  
-      enterValue();
-  
-      inputAdd.value = null;
-
-      
-    }
-    
-  });
-
-
-
+export {loadFromStorage as default}
