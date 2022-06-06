@@ -33,9 +33,10 @@ const checkItem = () => {
         storageData[i].completed = false;
       }
       localStorage.setItem('taskList', JSON.stringify(storageData));
-
-      if (iconImg[i].classList.contains('fa-trash')) {
-        iconImg[i].addEventListener('click', () => {
+    }
+    iconImg.forEach((i) => i.addEventListener('click', () => {
+      for (let i = 0; i < checkbox.length; i += 1) {
+        if (iconImg[i].classList.contains('fa-trash')) {
           listItem[i].remove();
           const storedData = JSON.parse(localStorage.getItem('taskList'));
 
@@ -44,9 +45,9 @@ const checkItem = () => {
 
           localStorage.setItem('taskList', JSON.stringify(newData));
           numberIndex();
-        });
+        }
       }
-    }
+    }));
 
     clearBtn.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
