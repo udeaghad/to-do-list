@@ -77,10 +77,10 @@ editIcon.addEventListener('click', () => {
         const storedData = JSON.parse(localStorage.getItem('taskList'))
        
        const newData = storedData.filter(arr => arr.descr !==listInfo.innerHTML)
-      console.log(taskList)
+      
       
       taskList = taskList.filter(arr => arr.descr !==listInfo.innerHTML )
-      console.log(taskList)
+     
       localStorage.setItem('taskList', JSON.stringify(newData)) 
       
     
@@ -95,7 +95,7 @@ editIcon.addEventListener('click', () => {
             
            storedData.push(editedTask);
            taskList.push(editedTask);
-           console.log(taskList)  
+          
           
             localStorage.setItem('taskList', JSON.stringify(storedData))
 
@@ -118,13 +118,13 @@ container.addEventListener('click', _modules_checkitem_js__WEBPACK_IMPORTED_MODU
 
 const numberIndex = () => {
     const dataStorage = JSON.parse(localStorage.getItem('taskList'))
-            console.log(dataStorage)
+           
             let newIndex = 0;
             for (let i = 0; i < dataStorage.length; i+=1){
                 dataStorage[i].index = newIndex+=1
                 
             }
-            console.log(dataStorage)               
+                         
             localStorage.setItem('taskList', JSON.stringify(dataStorage))
 }
 
@@ -17886,10 +17886,10 @@ editIcon.addEventListener('click', () => {
         const storedData = JSON.parse(localStorage.getItem('taskList'))
        
        const newData = storedData.filter(arr => arr.descr !==listInfo.innerHTML)
-      console.log(taskList)
+     
       
       taskList = taskList.filter(arr => arr.descr !==listInfo.innerHTML )
-      console.log(taskList)
+    
       localStorage.setItem('taskList', JSON.stringify(newData)) 
       
     
@@ -17904,7 +17904,7 @@ editIcon.addEventListener('click', () => {
             
            storedData.push(editedTask);
            taskList.push(editedTask);
-           console.log(taskList)  
+         
           
             localStorage.setItem('taskList', JSON.stringify(storedData))
 
@@ -17921,13 +17921,13 @@ numberIndex();
 
 const numberIndex = () => {
     const dataStorage = JSON.parse(localStorage.getItem('taskList'))
-            console.log(dataStorage)
+           
             let newIndex = 0;
             for (let i = 0; i < dataStorage.length; i+=1){
                 dataStorage[i].index = newIndex+=1
                 
             }
-            console.log(dataStorage)               
+                          
             localStorage.setItem('taskList', JSON.stringify(dataStorage))
 }
 
@@ -17977,7 +17977,7 @@ const checkItem = () => {
        
        const newData = storedData.filter(arr => arr.descr !==  listInfo[i].innerHTML)
        taskList = taskList.filter(arr => arr.descr !== listInfo[i].innerHTML )
-       console.log(taskList)
+     
        localStorage.setItem('taskList', JSON.stringify(newData))
        
        numberIndex();
@@ -17992,13 +17992,13 @@ const checkItem = () => {
 
 const numberIndex = () => {
     const dataStorage = JSON.parse(localStorage.getItem('taskList'))
-            console.log(dataStorage)
+           
             let newIndex = 0;
             for (let i = 0; i < dataStorage.length; i+=1){
                 dataStorage[i].index = newIndex+=1
                 
             }
-            console.log(dataStorage)               
+                         
             localStorage.setItem('taskList', JSON.stringify(dataStorage))
 }
 

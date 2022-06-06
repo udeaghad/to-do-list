@@ -5,7 +5,7 @@
 }
 
 main {
-  background-color:rgb(231, 231, 231);
+  background-color: rgb(231, 231, 231);
   height: 100%;
   padding: 10% 3% 15% 3%;
 }
@@ -13,7 +13,6 @@ main {
 .heading {
   display: flex;
   height: 100px;
-  
   background-color: white;
   justify-content: space-between;
   align-items: center;
@@ -21,9 +20,9 @@ main {
   border-radius: 10px 10px 0 0;
 }
 
-h1 {    
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 32px;    
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 32px;
   padding-left: 18px;
 }
 
@@ -37,8 +36,7 @@ h1 {
   padding: 24px;
 }
 
-#to-do-input
-{
+#to-do-input {
   width: 100%;
   border: none;
   font-size: 32px;
@@ -47,13 +45,12 @@ h1 {
 
 .edit-input {
   width: 100%;
-  border: none;
   font-size: 32px;
   font-style: italic;
-  
+  border: 1px solid gray;
 }
+
 .fa-solid {
-  font-family: "Font Awesome 6 Free";
   font-weight: 900;
   font-size: 18px;
 }
@@ -73,7 +70,6 @@ h1 {
   gap: 12px;
   list-style: none;
   padding: 12px;
- 
 }
 
 .check-box {
@@ -82,18 +78,15 @@ h1 {
 }
 
 .newInput {
-  width: 88%;    
+  width: 88%;
   font-size: 32px;
   font-style: italic;
 }
-
-
 
 .list-info {
   font-size: 32px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 92%;
-  
 }
 
 .clear-btn {
@@ -110,12 +103,6 @@ section {
   margin: 10px 10px 10px 10px;
 }
 
-.edit-input {
-  border: 1px solid gray; 
-    
-}
-
 .line-through {
   text-decoration: line-through;
 }
-
