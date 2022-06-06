@@ -3,13 +3,14 @@ let taskList = [];
 const numberIndex = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
 
-  const newIndex = 0;
+  let newIndex = 1;
   for (let i = 0; i < dataStorage.length; i += 1) {
-    dataStorage[i].index = newIndex + 1;
+    dataStorage[i].index = newIndex;
+    newIndex += 1;
   }
-
   localStorage.setItem('taskList', JSON.stringify(dataStorage));
 };
+
 const checkItem = () => {
   const listItem = document.querySelectorAll('.list-item');
 

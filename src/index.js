@@ -17,19 +17,18 @@ class Task {
   }
 }
 
-let index = 1;
-
 const numberIndex = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
 
-  const newIndex = 0;
+  let newIndex = 1;
   for (let i = 0; i < dataStorage.length; i += 1) {
-    dataStorage[i].index = newIndex + 1;
+    dataStorage[i].index = newIndex;
+    newIndex += 1;
   }
-
   localStorage.setItem('taskList', JSON.stringify(dataStorage));
 };
 
+let index = 0;
 const addItem = () => {
   const addTask = new Task(inputAdd.value, false, index);
 
@@ -85,7 +84,6 @@ const addItem = () => {
         listInfo.innerHTML = editInput.value;
         const storedData = JSON.parse(localStorage.getItem('taskList'));
         const editedTask = new Task(listInfo.innerHTML, false, index);
-
         storedData.push(editedTask);
         taskList.push(editedTask);
 
@@ -101,22 +99,10 @@ const addItem = () => {
 
 container.addEventListener('click', checkItem);
 
-/* const enterValue = () => {
-  const addTask = new Task(inputAdd.value, false, index);
-
-  taskList.push(addTask);
-  index += 1;
-
-  localStorage.setItem('taskList', JSON.stringify(taskList));
-  addItem(addTask.descr);
-}; */
-
 inputAdd.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
 
     addItem();
-
-    // inputAdd.value = "";
   }
 });

@@ -1,31 +1,3 @@
-class Task {
-  constructor(descr, completed, index = 0) {
-    this.descr = descr;
-    this.completed = completed;
-    this.index = index;
-  }
-}
-
-const taskList = [];
-
-let index = 1;
-
-const inputAdd = document.querySelector('#to-do-input');
-
-const numberIndex = () => {
-  const addTask = new Task(inputAdd.value, false, index);
-
-  taskList.push(addTask);
-  index += 1;
-
-  const dataStorage = JSON.parse(localStorage.getItem('taskList'));
-
-  const newIndex = 0;
-  for (let i = 0; i < dataStorage.length; i += 1) {
-    dataStorage[i].index = newIndex + 1;
-  }
-};
-
 const loadFromStorage = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
   for (let i = 0; i < dataStorage.length; i += 1) {
@@ -62,13 +34,9 @@ const loadFromStorage = () => {
         if (e.key === 'Enter') {
           listItem.replaceChild(listInfo, editInput);
           listInfo.innerHTML = editInput.value;
-
-          numberIndex();
         }
       });
     });
-
-    numberIndex();
   }
 };
 
