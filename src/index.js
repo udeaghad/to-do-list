@@ -72,10 +72,17 @@ const addItem = () => {
   listItem.append(checkbox, listInfo, editIcon);
   let editIndex;
   // Create new input node and replace the old node on edit button click
+
   editIcon.addEventListener('click', () => {
+    const editCont = document.createElement('div');
+    editCont.classList.add('edit-con');
     const editInput = document.createElement('input');
     editInput.classList.add('edit-input');
-    listItem.replaceChild(editInput, listInfo);
+    const editMsg = document.createElement('span');
+    editMsg.classList.add('edit-msg');
+    editMsg.innerHTML = "Press 'Enter' to save changes";
+    editCont.append(editInput, editMsg);
+    listItem.replaceChild(editCont, listInfo);
     editInput.value = listInfo.innerHTML;
 
     const storedData = JSON.parse(localStorage.getItem('taskList'));
@@ -94,7 +101,7 @@ const addItem = () => {
     // Replace input node with another node on 'enter' key and also holdingthe valueofthe input node
     editInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        listItem.replaceChild(listInfo, editInput);
+        listItem.replaceChild(listInfo, editCont);
         listInfo.innerHTML = editInput.value;
         const storedData = JSON.parse(localStorage.getItem('taskList'));
 

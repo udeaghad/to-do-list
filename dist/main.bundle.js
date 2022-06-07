@@ -81,10 +81,17 @@ const addItem = () => {
   listItem.append(checkbox, listInfo, editIcon);
   let editIndex;
   // Create new input node and replace the old node on edit button click
+
   editIcon.addEventListener('click', () => {
+    const editCont = document.createElement('div');
+    editCont.classList.add('edit-con');
     const editInput = document.createElement('input');
     editInput.classList.add('edit-input');
-    listItem.replaceChild(editInput, listInfo);
+    const editMsg = document.createElement('span');
+    editMsg.classList.add('edit-msg');
+    editMsg.innerHTML = "Press 'Enter' to save changes";
+    editCont.append(editInput, editMsg);
+    listItem.replaceChild(editCont, listInfo);
     editInput.value = listInfo.innerHTML;
 
     const storedData = JSON.parse(localStorage.getItem('taskList'));
@@ -103,7 +110,7 @@ const addItem = () => {
     // Replace input node with another node on 'enter' key and also holdingthe valueofthe input node
     editInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        listItem.replaceChild(listInfo, editInput);
+        listItem.replaceChild(listInfo, editCont);
         listInfo.innerHTML = editInput.value;
         const storedData = JSON.parse(localStorage.getItem('taskList'));
 
@@ -485,7 +492,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nmain {\r\n  background-color: rgb(231, 231, 231);\r\n  height: 100%;\r\n  padding: 10% 3% 15% 3%;\r\n}\r\n\r\n.heading {\r\n  display: flex;\r\n  height: 100px;\r\n  background-color: white;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding-right: 24px;\r\n  border-radius: 10px 10px 0 0;\r\n}\r\n\r\nh1 {\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  font-size: 32px;\r\n  padding-left: 18px;\r\n}\r\n\r\n.input-field {\r\n  margin-top: 5px;\r\n  height: 100px;\r\n  width: 100%;\r\n  display: flex;\r\n  background-color: white;\r\n  align-items: center;\r\n  padding: 24px;\r\n}\r\n\r\n#to-do-input {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n.edit-input {\r\n  width: 100%;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  border: 1px solid gray;\r\n}\r\n\r\n.fa-solid {\r\n  font-weight: 900;\r\n  font-size: 18px;\r\n}\r\n\r\n.list {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 28px;\r\n  background-color: white;\r\n  margin-top: 5px;\r\n}\r\n\r\n.list-item {\r\n  display: flex;\r\n  height: 100px;\r\n  align-items: center;\r\n  gap: 12px;\r\n  list-style: none;\r\n  padding: 12px;\r\n}\r\n\r\n.check-box {\r\n  width: 42px;\r\n  height: 42px;\r\n}\r\n\r\n.newInput {\r\n  width: 88%;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n.list-info {\r\n  font-size: 32px;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  width: 92%;\r\n}\r\n\r\n.clear-btn {\r\n  width: 100%;\r\n  height: 150px;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  border: none;\r\n  border-radius: 0 0 10px 10px;\r\n}\r\n\r\nsection {\r\n  margin: 10px 10px 10px 10px;\r\n}\r\n\r\n.line-through {\r\n  text-decoration: line-through;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\n\r\nmain {\r\n  background-color: rgb(231, 231, 231);\r\n  height: 100%;\r\n  padding: 10% 3% 15% 3%;\r\n}\r\n\r\n.heading {\r\n  display: flex;\r\n  height: 100px;\r\n  background-color: white;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding-right: 24px;\r\n  border-radius: 10px 10px 0 0;\r\n}\r\n\r\nh1 {\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  font-size: 32px;\r\n  padding-left: 18px;\r\n}\r\n\r\n.input-field {\r\n  margin-top: 5px;\r\n  height: 100px;\r\n  width: 100%;\r\n  display: flex;\r\n  background-color: white;\r\n  align-items: center;\r\n  padding: 24px;\r\n}\r\n\r\n#to-do-input {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n.edit-input {\r\n  width: 100%;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  border: 1px solid gray;\r\n}\r\n\r\n.fa-solid {\r\n  font-weight: 900;\r\n  font-size: 18px;\r\n}\r\n\r\n.list {\r\n  width: 100%;\r\n  border: none;\r\n  font-size: 28px;\r\n  background-color: white;\r\n  margin-top: 5px;\r\n}\r\n\r\n.list-item {\r\n  display: flex;\r\n  height: 100px;\r\n  align-items: center;\r\n  gap: 12px;\r\n  list-style: none;\r\n  padding: 12px;\r\n}\r\n\r\n.check-box {\r\n  width: 42px;\r\n  height: 42px;\r\n}\r\n\r\n.newInput {\r\n  width: 88%;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n}\r\n\r\n.list-info {\r\n  font-size: 32px;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  width: 92%;\r\n}\r\n\r\n.clear-btn {\r\n  width: 100%;\r\n  height: 150px;\r\n  font-size: 32px;\r\n  font-style: italic;\r\n  font-family: Verdana, Geneva, Tahoma, sans-serif;\r\n  border: none;\r\n  border-radius: 0 0 10px 10px;\r\n}\r\n\r\nsection {\r\n  margin: 10px 10px 10px 10px;\r\n}\r\n\r\n.line-through {\r\n  text-decoration: line-through;\r\n}\r\n\r\n.edit-msg {\r\n  color: red;\r\n  font-size: 16px;\r\n}\r\n\r\n.edit-con {\r\n  height: 50%;\r\n  width: 93%;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -687,6 +694,7 @@ const numberIndex = () => {
 // Create events when checkbox is clicked
 const checkItem = () => {
   const listItem = document.querySelectorAll('.list-item');
+  const list = document.querySelectorAll('.list');
 
   listItem.forEach(() => {
     const checkbox = document.querySelectorAll('.check-box');
@@ -713,7 +721,7 @@ const checkItem = () => {
     iconImg.forEach((i) => i.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
-          listItem[i].remove();
+          list[i].remove();
           const storedData = JSON.parse(localStorage.getItem('taskList'));
 
           const newData = storedData.filter((arr) => arr.descr !== listInfo[i].innerHTML);
@@ -728,7 +736,7 @@ const checkItem = () => {
     clearBtn.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
-          listItem[i].remove();
+          list[i].remove();
           const storedData = JSON.parse(localStorage.getItem('taskList'));
 
           const newData = storedData.filter((arr) => arr.descr !== listInfo[i].innerHTML);

@@ -14,6 +14,7 @@ const numberIndex = () => {
 // Create events when checkbox is clicked
 const checkItem = () => {
   const listItem = document.querySelectorAll('.list-item');
+  const list = document.querySelectorAll('.list');
 
   listItem.forEach(() => {
     const checkbox = document.querySelectorAll('.check-box');
@@ -40,7 +41,7 @@ const checkItem = () => {
     iconImg.forEach((i) => i.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
-          listItem[i].remove();
+          list[i].remove();
           const storedData = JSON.parse(localStorage.getItem('taskList'));
 
           const newData = storedData.filter((arr) => arr.descr !== listInfo[i].innerHTML);
@@ -55,7 +56,7 @@ const checkItem = () => {
     clearBtn.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
-          listItem[i].remove();
+          list[i].remove();
           const storedData = JSON.parse(localStorage.getItem('taskList'));
 
           const newData = storedData.filter((arr) => arr.descr !== listInfo[i].innerHTML);

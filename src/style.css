@@ -106,3 +106,13 @@ section {
 .line-through {
   text-decoration: line-through;
 }
+
+.edit-msg {
+  color: red;
+  font-size: 16px;
+}
+
+.edit-con {
+  height: 50%;
+  width: 93%;
+}
