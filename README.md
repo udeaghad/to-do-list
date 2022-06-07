@@ -13,7 +13,7 @@
 
 ## Live Demo (if available)
 
-[Live Demo Link](https://github.com/udeaghad/to-do-list)
+
 
 ## Getting Started
 
