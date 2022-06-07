@@ -1,3 +1,5 @@
+// load list items from local storage
+
 const loadFromStorage = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
   if (dataStorage) {

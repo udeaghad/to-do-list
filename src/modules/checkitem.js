@@ -1,5 +1,5 @@
 let taskList = [];
-
+// To re-number the index after every action
 const numberIndex = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
 
@@ -11,6 +11,7 @@ const numberIndex = () => {
   localStorage.setItem('taskList', JSON.stringify(dataStorage));
 };
 
+// Create events when checkbox is clicked
 const checkItem = () => {
   const listItem = document.querySelectorAll('.list-item');
 
@@ -20,7 +21,7 @@ const checkItem = () => {
     const iconImg = document.querySelectorAll('.icon');
     const clearBtn = document.querySelector('#clear-btn');
     const storageData = JSON.parse(localStorage.getItem('taskList'));
-
+    // Strike the item, show trash icon,and change the value of completed when checked
     for (let i = 0; i < checkbox.length; i += 1) {
       if (checkbox[i].checked) {
         listInfo[i].classList.add('line-through');
@@ -34,6 +35,8 @@ const checkItem = () => {
       }
       localStorage.setItem('taskList', JSON.stringify(storageData));
     }
+
+    // Remove item from the list when the trash icon is clicked
     iconImg.forEach((i) => i.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
@@ -48,7 +51,7 @@ const checkItem = () => {
         }
       }
     }));
-
+    // Remove checked lists when clear button is clicked
     clearBtn.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {

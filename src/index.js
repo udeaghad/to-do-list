@@ -4,7 +4,10 @@ import loadFromStorage from './modules/loadstorage.js';
 
 import checkItem from './modules/checkitem.js';
 
+// load data on page refresh
 window.addEventListener('load', loadFromStorage);
+
+// Create empty array to take values
 let taskList = [];
 const inputAdd = document.querySelector('#to-do-input');
 const container = document.querySelector('.to-do-cont');
@@ -17,6 +20,7 @@ class Task {
   }
 }
 
+// Function to assign numbers to index after every action
 const numberIndex = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
 
@@ -29,6 +33,8 @@ const numberIndex = () => {
 };
 
 let index = 0;
+
+// Function to create items to display and store at local storage
 const addItem = () => {
   const addTask = new Task(inputAdd.value, false, index);
 
@@ -38,6 +44,7 @@ const addItem = () => {
 
   localStorage.setItem('taskList', JSON.stringify(taskList));
 
+  // To create each element nodes
   const container = document.querySelector('.to-do-cont');
   const listContainer = document.createElement('div');
   listContainer.classList.add('list');
@@ -63,7 +70,8 @@ const addItem = () => {
   listContainer.appendChild(listItem);
 
   listItem.append(checkbox, listInfo, editIcon);
-
+  let editIndex;
+  // Create new input node and replace the old node on edit button click
   editIcon.addEventListener('click', () => {
     const editInput = document.createElement('input');
     editInput.classList.add('edit-input');
@@ -74,18 +82,27 @@ const addItem = () => {
 
     const newData = storedData.filter((arr) => arr.descr !== listInfo.innerHTML);
 
-    taskList = taskList.filter((arr) => arr.descr !== listInfo.innerHTML);
+    taskList = taskList.filter((arr, i) => {
+      if (arr.descr === listInfo.innerHTML) {
+        editIndex = i;
+      }
+      return arr.descr !== listInfo.innerHTML;
+    });
 
     localStorage.setItem('taskList', JSON.stringify(newData));
 
+    // Replace input node with another node on 'enter' key and also holdingthe valueofthe input node
     editInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         listItem.replaceChild(listInfo, editInput);
         listInfo.innerHTML = editInput.value;
         const storedData = JSON.parse(localStorage.getItem('taskList'));
+
         const editedTask = new Task(listInfo.innerHTML, false, index);
-        storedData.push(editedTask);
-        taskList.push(editedTask);
+
+        storedData.splice(editIndex, 0, editedTask);
+
+        taskList.splice(editIndex, 0, editedTask);
 
         localStorage.setItem('taskList', JSON.stringify(storedData));
 
@@ -97,8 +114,10 @@ const addItem = () => {
   numberIndex();
 };
 
+// add event listerner to the imported checkItem to perform their functions
 container.addEventListener('click', checkItem);
 
+// add event listener to the input to create items added on the addItem function
 inputAdd.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();

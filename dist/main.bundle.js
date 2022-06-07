@@ -8,12 +8,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_loadstorage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _modules_checkitem_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
 // import _ from 'lodash';
- 
 
 
 
 
+
+// load data on page refresh
 window.addEventListener('load', _modules_loadstorage_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+// Create empty array to take values
 let taskList = [];
 const inputAdd = document.querySelector('#to-do-input');
 const container = document.querySelector('.to-do-cont');
@@ -26,6 +29,7 @@ class Task {
   }
 }
 
+// Function to assign numbers to index after every action
 const numberIndex = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
 
@@ -38,6 +42,8 @@ const numberIndex = () => {
 };
 
 let index = 0;
+
+// Function to create items to display and store at local storage
 const addItem = () => {
   const addTask = new Task(inputAdd.value, false, index);
 
@@ -47,6 +53,7 @@ const addItem = () => {
 
   localStorage.setItem('taskList', JSON.stringify(taskList));
 
+  // To create each element nodes
   const container = document.querySelector('.to-do-cont');
   const listContainer = document.createElement('div');
   listContainer.classList.add('list');
@@ -72,7 +79,8 @@ const addItem = () => {
   listContainer.appendChild(listItem);
 
   listItem.append(checkbox, listInfo, editIcon);
-
+  let editIndex;
+  // Create new input node and replace the old node on edit button click
   editIcon.addEventListener('click', () => {
     const editInput = document.createElement('input');
     editInput.classList.add('edit-input');
@@ -83,18 +91,27 @@ const addItem = () => {
 
     const newData = storedData.filter((arr) => arr.descr !== listInfo.innerHTML);
 
-    taskList = taskList.filter((arr) => arr.descr !== listInfo.innerHTML);
+    taskList = taskList.filter((arr, i) => {
+      if (arr.descr === listInfo.innerHTML) {
+        editIndex = i;
+      }
+      return arr.descr !== listInfo.innerHTML;
+    });
 
     localStorage.setItem('taskList', JSON.stringify(newData));
 
+    // Replace input node with another node on 'enter' key and also holdingthe valueofthe input node
     editInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         listItem.replaceChild(listInfo, editInput);
         listInfo.innerHTML = editInput.value;
         const storedData = JSON.parse(localStorage.getItem('taskList'));
+
         const editedTask = new Task(listInfo.innerHTML, false, index);
-        storedData.push(editedTask);
-        taskList.push(editedTask);
+
+        storedData.splice(editIndex, 0, editedTask);
+
+        taskList.splice(editIndex, 0, editedTask);
 
         localStorage.setItem('taskList', JSON.stringify(storedData));
 
@@ -106,8 +123,10 @@ const addItem = () => {
   numberIndex();
 };
 
+// add event listerner to the imported checkItem to perform their functions
 container.addEventListener('click', _modules_checkitem_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
+// add event listener to the input to create items added on the addItem function
 inputAdd.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
@@ -596,6 +615,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ loadFromStorage)
 /* harmony export */ });
+// load list items from local storage
+
 const loadFromStorage = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
   if (dataStorage) {
@@ -651,7 +672,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ checkItem)
 /* harmony export */ });
 let taskList = [];
-
+// To re-number the index after every action
 const numberIndex = () => {
   const dataStorage = JSON.parse(localStorage.getItem('taskList'));
 
@@ -663,6 +684,7 @@ const numberIndex = () => {
   localStorage.setItem('taskList', JSON.stringify(dataStorage));
 };
 
+// Create events when checkbox is clicked
 const checkItem = () => {
   const listItem = document.querySelectorAll('.list-item');
 
@@ -672,7 +694,7 @@ const checkItem = () => {
     const iconImg = document.querySelectorAll('.icon');
     const clearBtn = document.querySelector('#clear-btn');
     const storageData = JSON.parse(localStorage.getItem('taskList'));
-
+    // Strike the item, show trash icon,and change the value of completed when checked
     for (let i = 0; i < checkbox.length; i += 1) {
       if (checkbox[i].checked) {
         listInfo[i].classList.add('line-through');
@@ -686,6 +708,8 @@ const checkItem = () => {
       }
       localStorage.setItem('taskList', JSON.stringify(storageData));
     }
+
+    // Remove item from the list when the trash icon is clicked
     iconImg.forEach((i) => i.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
@@ -700,7 +724,7 @@ const checkItem = () => {
         }
       }
     }));
-
+    // Remove checked lists when clear button is clicked
     clearBtn.addEventListener('click', () => {
       for (let i = 0; i < checkbox.length; i += 1) {
         if (iconImg[i].classList.contains('fa-trash')) {
