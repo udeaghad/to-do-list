@@ -21,7 +21,7 @@ To get a local copy up and running follow these simple example steps.
 
 
 Prerequisites: 
-   - Signup/login to your github account and go to https://github.com/udeaghad/es6-awesomebook/.
+   - Signup/login to your github account and go to https://github.com/udeaghad/to-do-list/.
    
 Setup
    - Clone the repository on github to your local terminal
