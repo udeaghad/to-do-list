@@ -2,13 +2,13 @@
 import './style.css';
 import loadFromStorage from './modules/loadstorage.js';
 
-import  checkItem from './modules/checkitem.js';
+import checkItem from './modules/checkitem.js';
 
 // load data on page refresh
 window.addEventListener('load', loadFromStorage);
 
 // Create empty array to take values
- let taskList = [];
+let taskList = [];
 const inputAdd = document.querySelector('#to-do-input');
 const container = document.querySelector('.to-do-cont');
 
@@ -98,7 +98,7 @@ const addItem = () => {
 
     localStorage.setItem('taskList', JSON.stringify(newData));
 
-    // Replace input node with another node on 'enter' key and also holding the value of the input node
+    // Replace input node with another node and also holding the value of the input node
     editInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         listItem.replaceChild(listInfo, editCont);
