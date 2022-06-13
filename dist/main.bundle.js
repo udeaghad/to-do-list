@@ -17,7 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('load', _modules_loadstorage_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 // Create empty array to take values
-let taskList = [];
+ let taskList = [];
 const inputAdd = document.querySelector('#to-do-input');
 const container = document.querySelector('.to-do-cont');
 

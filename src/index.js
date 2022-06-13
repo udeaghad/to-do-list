@@ -2,13 +2,13 @@
 import './style.css';
 import loadFromStorage from './modules/loadstorage.js';
 
-import checkItem from './modules/checkitem.js';
+import  checkItem from './modules/checkitem.js';
 
 // load data on page refresh
 window.addEventListener('load', loadFromStorage);
 
 // Create empty array to take values
-let taskList = [];
+ let taskList = [];
 const inputAdd = document.querySelector('#to-do-input');
 const container = document.querySelector('.to-do-cont');
 
