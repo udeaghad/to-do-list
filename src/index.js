@@ -98,7 +98,7 @@ const addItem = () => {
 
     localStorage.setItem('taskList', JSON.stringify(newData));
 
-    // Replace input node with another node on 'enter' key and also holdingthe valueofthe input node
+    // Replace input node with another node on 'enter' key and also holding the value of the input node
     editInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         listItem.replaceChild(listInfo, editCont);
