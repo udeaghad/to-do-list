@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/udeaghad/to-do-list/issues"
   },
-  "homepage": "https://github.com/udeaghad/to-do-list#readme",
+  "homepage": "https://github.com/udeaghad/to-do-list/dist/index.html",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.7.1",
