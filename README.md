@@ -12,7 +12,7 @@
 
 
 ## Live Demo
-https://udeaghad.github.io/to-do-list/
+https://udeaghad.github.io/to-do-list
 
 
 ## Getting Started
