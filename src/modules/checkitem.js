@@ -22,7 +22,7 @@ const checkItem = () => {
     const iconImg = document.querySelectorAll('.icon');
     const clearBtn = document.querySelector('#clear-btn');
     const storageData = JSON.parse(localStorage.getItem('taskList'));
-    // Strike the item, show trash icon,and change the value of completed when checked
+    // Strike the item, show trash icon, and change the value of completed when checked
     for (let i = 0; i < checkbox.length; i += 1) {
       if (checkbox[i].checked) {
         listInfo[i].classList.add('line-through');
