@@ -1,5 +1,5 @@
 // import _ from 'lodash';
-import './style.css';
+//import './style.css';
 import loadFromStorage from './modules/loadstorage.js';
 
 import checkItem from './modules/checkitem.js';
