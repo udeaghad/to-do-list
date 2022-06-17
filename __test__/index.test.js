@@ -1,4 +1,6 @@
-import { addItem, deleteItem, editItem, updateStatus, clearItems } from '../mock/addItem.js';
+import {
+  addItem, deleteItem, editItem, updateStatus, clearItems,
+} from '../mock/addItem.js';
 
 describe('To add and remove items from todo list', () => {
   test('To add new item to the list', () => {
@@ -36,9 +38,9 @@ describe('To add and remove items from todo list', () => {
 
     deleteItem(storedDataFromLocalStorage);
     expect(storedDataFromLocalStorage).toHaveLength(2);
+  });
 });
-});
-  
+
 describe('To edit,update status and clear all completed from todo list', () => {
   test('To edit item in the taskList', () => {
     const storedDataFromLocalStorage = [
@@ -48,8 +50,8 @@ describe('To edit,update status and clear all completed from todo list', () => {
     ];
 
     editItem('Join stand-up team session', storedDataFromLocalStorage);
-    expect(storedDataFromLocalStorage[2].descr).toBe('Join stand-up team session')
-  })
+    expect(storedDataFromLocalStorage[2].descr).toBe('Join stand-up team session');
+  });
 
   test('To update comleted status', () => {
     document.body.innerHTML = `
@@ -57,7 +59,7 @@ describe('To edit,update status and clear all completed from todo list', () => {
       <input type='checkbox' class='check-box'>
       <input type='checkbox' class='check-box checked' checked>
       <input type='checkbox' class='check-box'>
-     `
+     `;
 
     const storedDataFromLocalStorage = [
       { descr: 'join morning session', completed: false, index: 1 },
@@ -65,11 +67,11 @@ describe('To edit,update status and clear all completed from todo list', () => {
       { descr: 'take lunch', completed: false, index: 3 },
     ];
     const checkBox = document.querySelectorAll('.check-box');
-   
+
     updateStatus(storedDataFromLocalStorage, checkBox);
-    
+
     expect(storedDataFromLocalStorage[1].completed).toBeTruthy();
-  })
+  });
 
   test('To clear all completed item from tasklist', () => {
     const storedDataFromLocalStorage = [
