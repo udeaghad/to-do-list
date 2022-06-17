@@ -30,7 +30,7 @@ describe('To add and remove items from todo lis', () => {
   test('To remove item from tasklist', () => {
     const storedDataFromLocalStorage = [
       { descr: 'join morning session', completed: false, index: 1 },
-      { descr: 'first session pair programming', completed: true, index: 2 },
+      { descr: 'first session pair programming', completed: false, index: 2 },
       { descr: 'take lunch', completed: false, index: 3 },
     ];
 

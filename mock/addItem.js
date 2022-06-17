@@ -13,7 +13,7 @@ const addItem = (taskList, inputAdd) => {
 
 const deleteItem = (storedDataFromLocalStorage) => {
   for (let i = 0; i < storedDataFromLocalStorage.length; i += 1) {
-    if (storedDataFromLocalStorage[i].completed === true) {
+    if (storedDataFromLocalStorage[i].descr === 'first session pair programming') {
       storedDataFromLocalStorage.splice(i, 1);
     }
   }
