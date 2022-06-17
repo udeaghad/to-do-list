@@ -1,6 +1,6 @@
 import { addItem, deleteItem, editItem, updateStatus, clearItems } from '../mock/addItem.js';
 
-describe('To add and remove items from todo lis', () => {
+describe('To add and remove items from todo list', () => {
   test('To add new item to the list', () => {
     const taskList = [];
     document.body.innerHTML = `
@@ -36,14 +36,16 @@ describe('To add and remove items from todo lis', () => {
 
     deleteItem(storedDataFromLocalStorage);
     expect(storedDataFromLocalStorage).toHaveLength(2);
-  });
-
+});
+});
+  
+describe('To edit,update status and clear all completed from todo list', () => {
   test('To edit item in the taskList', () => {
     const storedDataFromLocalStorage = [
-        { descr: 'join morning session', completed: false, index: 1 },
-        { descr: 'first session pair programming', completed: false, index: 2 },
-        { descr: 'take lunch', completed: false, index: 3 },
-      ];
+      { descr: 'join morning session', completed: false, index: 1 },
+      { descr: 'first session pair programming', completed: false, index: 2 },
+      { descr: 'take lunch', completed: false, index: 3 },
+    ];
 
     editItem('Join stand-up team session', storedDataFromLocalStorage);
     expect(storedDataFromLocalStorage[2].descr).toBe('Join stand-up team session')
@@ -57,14 +59,14 @@ describe('To add and remove items from todo lis', () => {
       <input type='checkbox' class='check-box'>
      `
 
-      const storedDataFromLocalStorage = [
-        { descr: 'join morning session', completed: false, index: 1 },
-        { descr: 'first session pair programming', completed: false, index: 2 },
-        { descr: 'take lunch', completed: false, index: 3 },
-      ];
+    const storedDataFromLocalStorage = [
+      { descr: 'join morning session', completed: false, index: 1 },
+      { descr: 'first session pair programming', completed: false, index: 2 },
+      { descr: 'take lunch', completed: false, index: 3 },
+    ];
     const checkBox = document.querySelectorAll('.check-box');
    
-    updateStatus(storedDataFromLocalStorage, checkBox );
+    updateStatus(storedDataFromLocalStorage, checkBox);
     
     expect(storedDataFromLocalStorage[1].completed).toBeTruthy();
   })
